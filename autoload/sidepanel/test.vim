@@ -9,7 +9,7 @@ function! sidepanel#test#initialize()
   execute 'sp ~/test/3'
   execute 'wincmd k'
   if bufname("") != 2
-    echo 'ERROR initialise'
+    echoerr 'ERROR! initialization'
   endif
 endfunction
 
@@ -20,30 +20,25 @@ endfunction
 function! sidepanel#test#postoggle()
   execute 'SidePanelPosToggle'
   if bufname("") != 2
-    echo 'ERROR postoggle'
+    echoerr 'ERROR! postoggle'
   endif
 endfunction
 
 function! sidepanel#test#change_width()
   execute 'SidePanelWidth 10'
   if bufname("") != 2
-    echo 'ERROR change_width'
+    echoerr 'ERROR! change_width'
   endif
 endfunction
 
 function! sidepanel#test#test(name)
-  " if !exists('g:sidepanel_test_initialized')
-    call sidepanel#test#initialize()
-  "   let g:sidepanel_test_initialized = 1
-  " endif
+  call sidepanel#test#initialize()
   call sidepanel#test#open(a:name)
   execute 'wincmd l'
   execute 'wincmd j'
   if bufname("") != 2
-    echo 'ERROR ' . a:name
+    echoerr 'ERROR ' . a:name
   endif
-  " call sidepanel#test#postoggle()
-  " call sidepanel#test#change_width()
 endfunction
 
 function! sidepanel#test#all()
@@ -52,8 +47,8 @@ function! sidepanel#test#all()
   for name in names
     new
     only
-    echo ""
-    echo "==== Start " . name " ===="
+    echomsg ""
+    echomsg "==== Start " . name " ===="
     call sidepanel#test#test(name)
   endfor
 endfunction

@@ -46,10 +46,8 @@ endfunction
 
 function! s:error_msg(msg)
   let g:sidepanel_errmsg = a:msg
-  echohl ErrorMsg
-  echo 'Error: vim-panelname'
-  echo a:msg
-  echohl None
+  echoerr 'Error: vim-panelname'
+  echoerr a:msg
 endfunction
 
 function! sidepanel#open(name)
@@ -77,7 +75,7 @@ function! sidepanel#open(name)
     try
       let l:newpanel = g:sidepanel_config[l:name]
     catch
-      echo 'Configuration does not exist for ' . l:name
+      echoerr 'Configuration does not exist for ' . l:name
       return ''
     endtry
 
@@ -302,7 +300,6 @@ function! sidepanel#get_width()
       if l:_ >= 3 | break | endif
     endwhile
     let g:sidepanel_width = winwidth(0)
-    echo "Get Width!"
   endif
   call s:cursor_load()
 endfunction
