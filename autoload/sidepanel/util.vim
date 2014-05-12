@@ -32,7 +32,6 @@ function! sidepanel#util#delete(bufname)
   else
       return 0
   endif
-
 endfunction
 
 function sidepanel#util#gotowin(bufname)

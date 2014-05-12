@@ -78,7 +78,7 @@ function! sidepanel#init#set_defaults()
   let s:sidepanel_config_default['gundo'] = {
         \  'bufname': '__Gundo__',
         \  'filetype': 'gundo',
-        \  'open': ['GundoShow'],
+        \  'open': ['call sidepanel#init#gundo()'],
         \  'close': ['GundoHide'],
         \  'position': {
         \    'var': 'g:gundo_right',
@@ -142,6 +142,12 @@ function! sidepanel#init#nerdtree()
     execute "NERDTreeFind"
   else
     execute "NERDTreeCWD"
+  endif
+endfunction
+
+function! sidepanel#init#gundo()
+  if !sidepanel#util#gotowin('__Gundo__')
+    execute "GundoShow"
   endif
 endfunction
 
