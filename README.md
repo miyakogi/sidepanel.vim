@@ -23,7 +23,7 @@ Then reload .vimrc and execute `:NeoBundleInstall`.
 Add the following lines in your `.vimrc`.
 
 ```vim
-" Set position (left or gight) if neccesary (default: "left").
+" Set position (left or right) if neccesary (default: "left").
 let g:sidepanel_pos = "left"
 " Set width if neccesary (default: 32)
 let g:sidepanel_width = 26
