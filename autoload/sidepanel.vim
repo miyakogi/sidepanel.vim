@@ -256,6 +256,9 @@ function! s:width_set(width)
 endfunction
 
 function! sidepanel#width(width)
+  augroup sidepanel_getwidth
+    autocmd!
+  augroup END
   call s:width_set(a:width)
   if s:is_exists() == -1
     return
