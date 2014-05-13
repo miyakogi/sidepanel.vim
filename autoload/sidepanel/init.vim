@@ -138,7 +138,7 @@ function! sidepanel#init#set_defaults()
 endfunction
 
 function! sidepanel#init#nerdtree()
-  if filereadable('%')
+  if filereadable(expand('%'))
     execute "NERDTreeFind"
   else
     execute "NERDTreeCWD"
