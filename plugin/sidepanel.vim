@@ -11,6 +11,7 @@ set cpo&vim
 
 command! -nargs=? -complete=customlist,s:CompleteSidePanel SidePanel :call sidepanel#open(<q-args>)
 command! -nargs=0 SidePanelClose :call sidepanel#close()
+command! -nargs=0 SidePanelFocus :call sidepanel#focus()
 command! -nargs=0 SidePanelPosToggle :call sidepanel#pos_toggle()
 command! -nargs=1 SidePanelWidth :call sidepanel#width(<args>)
 

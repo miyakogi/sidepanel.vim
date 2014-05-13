@@ -26,6 +26,9 @@ CONTENTS						*sidepanel-contents*
 :SidePanelClose						*:SidePanelClose*
   Close sidepanel if it exists.
 
+:SidePanelFocus						 *:SidePanelFocus*
+  Go to sidepanel if it exists.
+
 :SidePanelPosToggle					*:SidePanelPosToggle*
   Toggle position of the sidepanel, left to right, or otherwise.
 

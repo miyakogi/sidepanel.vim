@@ -224,6 +224,10 @@ function! s:pos_set(pos)
   endfor
 endfunction
 
+function! sidepanel#focus()
+  call s:goto_sidepanel()
+endfunction
+
 function! sidepanel#pos(pos)
   call sidepanel#get_width()
   if g:sidepanel_pos == a:pos
