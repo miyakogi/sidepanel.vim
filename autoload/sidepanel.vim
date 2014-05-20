@@ -323,8 +323,7 @@ function! sidepanel#complete(pre)
       call add(l:res, l:key)
     endif
   endfor
-  let l:res = s:List.sort(l:res, 'char2nr(a:a)-char2nr(a:b)')
-  return l:res
+  return sort(l:res)
 endfunction
 
 let &cpo = s:save_cpo

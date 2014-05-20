@@ -3,8 +3,6 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('sidepanel')
-let s:List = s:V.import('Data.List')
 let s:BaseLine = 4
 
 function! sidepanel#list#open()
@@ -65,8 +63,7 @@ function! s:get_panelnames()
   for l:name in keys(g:sidepanel_config)
     call add(s:panelnames, l:name)
   endfor
-  let s:panelnames = s:List.uniq(sort(s:panelnames))
-  return s:panelnames
+  return sort(s:panelnames)
 endfunction
 
 function! s:title()
