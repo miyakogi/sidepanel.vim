@@ -3,9 +3,6 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('sidepanel')
-let s:List = s:V.import('Data.List')
-
 function! sidepanel#initialize()
   call sidepanel#init#set_defaults()
   call s:pos_set(g:sidepanel_pos)
