@@ -72,12 +72,12 @@ function! sidepanel#open(name)
     let s:current_panelname = l:name
 
     let l:oldpanel = g:sidepanel_config[s:old_panelname]
-    try
+    if has_key(g:sidepanel_config, l:name)
       let l:newpanel = g:sidepanel_config[l:name]
-    catch
+    else
       echoerr 'Configuration does not exist for ' . l:name
       return ''
-    endtry
+    endif
 
     call s:close_panel(l:oldpanel)
     call s:open_panel(l:newpanel)
@@ -309,6 +309,7 @@ function! sidepanel#get_width()
     let g:sidepanel_width = winwidth(0)
   endif
   call s:cursor_load()
+  " return exists('g:sidepanel_width') ? g:sidepanel_width : 0
 endfunction
 
 function! sidepanel#complete(pre)

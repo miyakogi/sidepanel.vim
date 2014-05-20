@@ -8,6 +8,19 @@ let s:List = s:V.import('Data.List')
 let s:BaseLine = 4
 
 function! sidepanel#list#open()
+  try
+    let title = 'SidePanel List'
+    let panelnames = s:get_panelnames()
+    let panels = copy(panelnames)
+    let choices = rabbit_ui#choices(title, panels)
+    call sidepanel#open(panelnames[choices])
+
+  catch
+    call s:list_open()
+  endtry
+endfunction
+
+function! s:list_open()
   if sidepanel#util#gotowin("__SidePanel_List__") == 0
     call sidepanel#util#open("__SidePanel_List__")
     let &swapfile = 0
@@ -37,19 +50,23 @@ function! s:clear()
 endfunction
 
 function! s:create()
+  let l:panelnames = s:get_panelnames()
+
+  call append(0, s:title())
+  call append(0, '')
+  for l:name in l:panelnames
+    call append(line("$"), "   " . l:name)
+    call cursor(s:BaseLine, 4)
+  endfor
+endfunction
+
+function! s:get_panelnames()
   let s:panelnames = []
   for l:name in keys(g:sidepanel_config)
     call add(s:panelnames, l:name)
   endfor
-  call uniq(sort(s:panelnames))
-  let a:num = 0
-
-  call append(0, s:title())
-  call append(0, '')
-  for l:name in s:panelnames
-    call append(line("$"), "   " . l:name)
-    call cursor(s:BaseLine, 4)
-  endfor
+  let s:panelnames = s:List.uniq(sort(s:panelnames))
+  return s:panelnames
 endfunction
 
 function! s:title()
