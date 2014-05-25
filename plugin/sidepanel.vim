@@ -8,6 +8,7 @@ let g:loaded_sidepanel = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+let g:sidepanel_use_rabbit_ui = get(g:, 'sidepanel_use_rabbit_ui', 0)
 
 command! -nargs=? -complete=customlist,s:CompleteSidePanel SidePanel :call sidepanel#open(<q-args>)
 command! -nargs=0 SidePanelClose :call sidepanel#close()

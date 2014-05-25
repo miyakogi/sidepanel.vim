@@ -6,36 +6,49 @@ set cpo&vim
 let s:BaseLine = 4
 
 function! sidepanel#list#open()
-  try
-    let title = 'SidePanel List'
-    let panelnames = s:get_panelnames()
-    let panels = copy(panelnames)
-    let choices = rabbit_ui#choices(title, panels)
-    call sidepanel#open(panelnames[choices])
-
-  catch
+  if g:sidepanel_use_rabbit_ui
+    try
+      let title = 'SidePanel List'
+      let panelnames = s:get_panelnames()
+      let panels = copy(panelnames)
+      let choices = rabbit_ui#choices(title, panels)
+      call sidepanel#open(panelnames[choices])
+    catch
+      call s:list_open()
+    endtry
+  else
     call s:list_open()
-  endtry
+  endif
 endfunction
 
 function! s:list_open()
-  if sidepanel#util#gotowin("__SidePanel_List__") == 0
-    call sidepanel#util#open("__SidePanel_List__")
-    let &swapfile = 0
-    let &buftype = 'nofile'
-    let &modifiable = 1
-    let &readonly = 0
-    setlocal nowrap
-    call s:clear()
-    call s:create()
-    nnoremap <buffer><silent><nowait> <CR> :<C-u>call <SID>cr()<CR>
-    nnoremap <buffer><silent><nowait> <Up> :<C-u>call <SID>up()<CR>
-    nnoremap <buffer><silent><nowait> k :<C-u>call <SID>up()<CR>
-    nnoremap <buffer><silent><nowait> <Down> :<C-u>call <SID>down()<CR>
-    nnoremap <buffer><silent><nowait> j :<C-u>call <SID>down()<CR>
-    let &modified = 0
-    let &modifiable = 0
-    let &readonly = 1
+  let list_bufname = "__SidePanel_List__"
+  let msg_failed = "Failed to make List"
+  if sidepanel#util#gotowin(list_bufname) == 0
+    call sidepanel#util#open(list_bufname)
+    if expand('%:t') == "__SidePanel_List__"
+      try
+        setlocal noswapfile
+        setlocal buftype=nofile
+        setlocal modifiable
+        setlocal noreadonly
+        setlocal nowrap
+        call s:clear()
+        call s:create()
+        nnoremap <buffer><silent> <CR> :<C-u>call <SID>cr()<CR>
+        nnoremap <buffer><silent> <Up> :<C-u>call <SID>up()<CR>
+        nnoremap <buffer><silent> k :<C-u>call <SID>up()<CR>
+        nnoremap <buffer><silent> <Down> :<C-u>call <SID>down()<CR>
+        nnoremap <buffer><silent> j :<C-u>call <SID>down()<CR>
+        setlocal nomodified
+        setlocal nomodifiable
+        setlocal readonly
+      catch
+        echoerr msg_failed
+      endtry
+    else
+      echoerr msg_failed
+    endif
   endif
 endfunction
 
