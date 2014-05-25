@@ -6,7 +6,7 @@ set cpo&vim
 let s:BaseLine = 4
 
 function! sidepanel#list#open()
-  if g:sidepanel_use_rabbit_ui
+  if g:sidepanel_use_rabbit_ui == 1
     try
       let title = 'SidePanel List'
       let panelnames = s:get_panelnames()
