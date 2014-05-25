@@ -77,5 +77,18 @@ This option specifies activated plugins for sidepanel.
 
 Default values for each plugin are listed in autoload/sidepanel/init.vim.
 
+						*g:sidepanel_use_rabbit_ui*
+If this option is set to 1, this plugin uses rabbit-uiplugin to show list of
+plugins.
+
+  Type: Number
+  Default: 0
+  Example: >
+	let g:sidepanel_use_rabbit_ui = 1
+<
+
+Details of rabbit-ui are described in its repository.
+(https://github.com/rbtnn/rabbit-ui.vim)
+
 ==============================================================================
 vim:tw=78:sw=8:ts=8:ft=help:norl:noet:

@@ -1,11 +1,12 @@
 # SidePanel.vim
 
-A vim plugin to manage "sidebar type" plugins in a singl window.
+A vim plugin to manage "sidebar type" plugins in a single window.
 This plugin currently supports
 [NERDTree](https://github.com/scrooloose/nerdtree),
 [TagBar](https://github.com/majutsushi/tagbar),
 [Gundo](https://github.com/sjl/gundo.vim),
 and [VimFiler](https://github.com/Shougo/vimfiler.vim) by default.
+
 
 ## Installation
 
@@ -28,6 +29,9 @@ let g:sidepanel_pos = "left"
 " Set width if neccesary (default: 32)
 let g:sidepanel_width = 26
 
+" To use rabbit-ui.vim
+let g:sidepanel_use_rabbit_ui = 1
+
 " Activate plugins in SidePanel
 let g:sidepanel_config = {}
 let g:sidepanel_config['nerdtree'] = {}
@@ -38,7 +42,7 @@ let g:sidepanel_config['vimfiler'] = {}
 
 ## Usage
 
-`:SidePanel` shows list of available plugins. When you select a plugin and press enter, the plugin will replace the plugin list.
+`:SidePanel` shows a list of available plugins. When you select a plugin and press enter, the plugin will replace the plugin list. If you have installed [rabbit-ui.vim](https://github.com/rbtnn/rabbit-ui.vim) plugin and `g:sidepanel_use_rabbit_ui=1`, this plugin uses rabbit-ui to show the list.
 
 `:SidePanel nerdtree` opens NERDTree. If another sidebar is exists, it will be replaced.
 
@@ -47,3 +51,7 @@ let g:sidepanel_config['vimfiler'] = {}
 `:SidePanelWidth [N]` changes width of the sidebar to `[N]`.
 
 `:SidePanelClose` closes sidebar.
+
+## Screen casts
+
+See [this blog post](http://h-miyako.hatenablog.com/entry/2014/05/12/215330) (sorry, written in Japanese).
