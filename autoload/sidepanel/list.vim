@@ -12,20 +12,22 @@ function! sidepanel#list#open()
       let panelnames = s:get_panelnames()
       let panels = copy(panelnames)
       let choices = rabbit_ui#choices(title, panels)
-      if type(choices) == 0
-        call sidepanel#open(panelnames[choices])
-      elseif type(choices) == 4 && has_key(choices, 'value')
-        call sidepanel#open(panelnames[choices.value])
-      elseif type(choices) == 4 && choices == {}
-        return 0
-      else
-        echoerr "Unexpected value from rabbit-ui.\nUse default list."
-        call s:list_open()
-      endif
     catch
-      echoerr "Failed to open rabbit-ui.\nUse default list."
+      echoerr "Failed to open rabbit-ui. Use default list."
+      let g:sidepanel_use_rabbit_ui = 0
       call s:list_open()
     endtry
+    if type(choices) == 0
+      call sidepanel#open(panelnames[choices])
+    elseif type(choices) == 4 && has_key(choices, 'value')
+      call sidepanel#open(panelnames[choices.value])
+    elseif type(choices) == 4 && choices == {}
+      return 0
+    else
+      echoerr "Unexpected value from rabbit-ui. Use default list."
+      let g:sidepanel_use_rabbit_ui = 0
+      call s:list_open()
+    endif
   else
     call s:list_open()
   endif

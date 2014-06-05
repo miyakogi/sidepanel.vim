@@ -39,6 +39,7 @@ function! s:close_panel(panel)
           \ . '"list" of command(s).'
     call s:error_msg(l:msg)
   endif
+  return
 endfunction
 
 function! s:error_msg(msg)
@@ -59,29 +60,47 @@ function! sidepanel#open(name)
   else
     let l:name = a:name
   endif
-  if !exists('s:current_panelname') || l:name == s:current_panelname
-    let l:panel = g:sidepanel_config[l:name]
-    let s:current_panelname = l:name
-    let g:sidepanel_current_panel = l:name
-    call s:open_panel(l:panel)
-  else
-    let s:old_panelname = s:current_panelname
-    let s:current_panelname = l:name
 
-    let l:oldpanel = g:sidepanel_config[s:old_panelname]
-    if has_key(g:sidepanel_config, l:name)
-      let l:newpanel = g:sidepanel_config[l:name]
-    else
-      echoerr 'Configuration does not exist for ' . l:name
-      return ''
-    endif
-
-    call s:close_panel(l:oldpanel)
-    call s:open_panel(l:newpanel)
+  if g:sidepanel_use_rabbit_ui && l:name == 'list'
+    call s:open_panel(g:sidepanel_config.list)
+    return ""
   endif
-  call s:cursor_save()
-  call s:resize_panel()
-  call s:cursor_load()
+
+  let l:eventignore = &eventignore
+  set eventignore=BufUnload,BufWinLeave
+
+  try
+    if !exists('s:current_panelname') || l:name == s:current_panelname
+      let l:panel = g:sidepanel_config[l:name]
+      let s:current_panelname = l:name
+      let g:sidepanel_current_panel = l:name
+      call s:open_panel(l:panel)
+    else
+      let s:old_panelname = s:current_panelname
+
+      let l:oldpanel = g:sidepanel_config[s:old_panelname]
+      if has_key(g:sidepanel_config, l:name)
+        let l:newpanel = g:sidepanel_config[l:name]
+      else
+        echoerr 'Configuration does not exist for ' . l:name
+        return ''
+      endif
+
+      call s:open_panel(l:newpanel)
+      if s:is_exists(l:newpanel) >= 0
+        let s:current_panelname = l:name
+        let g:sidepanel_current_panel = l:name
+        if s:is_exists(l:oldpanel) >= 0
+          call s:close_panel(l:oldpanel)
+        endif
+      endif
+    endif
+    call s:cursor_save()
+    call s:resize_panel()
+    call s:cursor_load()
+  finally
+    let &eventignore = l:eventignore
+  endtry
 endfunction
 
 function! sidepanel#close()
@@ -116,20 +135,28 @@ function! s:goto_window()
   endif
 endfunction
 
-function! s:is_exists()
+function! s:is_exists(...)
   let l:res = -1
-  if !exists('s:current_panelname')
-    return l:res
+  if a:0 == 0
+    if !exists('s:current_panelname')
+      return l:res
+    endif
+    let l:panel = g:sidepanel_config[s:current_panelname]
+  else
+    if type(a:1) == type({})
+      let l:panel = a:1
+    elseif type(a:1) == type("")
+      let l:panel = g:sidepanel_config[a:1]
+    endif
   endif
 
-  let l:panel = g:sidepanel_config[s:current_panelname]
   if has_key(l:panel, 'bufname')
-    let l:res = bufwinnr(bufnr(g:sidepanel_config[s:current_panelname].bufname))
+    let l:res = bufwinnr(bufnr(l:panel.bufname))
     return l:res
 
   elseif has_key(l:panel, 'filetype')
     let l:winnum = winnr('$')
-    let l:sidepanel_ft = g:sidepanel_config[s:current_panelname].filetype
+    let l:sidepanel_ft = l:panel.filetype
     let l:num = 0
     while l:num <= l:winnum
       let l:winfiletype = getwinvar(l:num, "&filetype")
@@ -274,6 +301,7 @@ function! s:resize_panel()
   if get(l:panel, "no_resize")
     return
   endif
+
   if s:is_exists() != -1
     let l:_ = 0
     while s:is_in_sidepanel() == 0
@@ -281,9 +309,10 @@ function! s:resize_panel()
       let l:_ += 1
       if l:_ >= 3 | break | endif
     endwhile
-    execute "vertical resize " . g:sidepanel_width
-    call s:set_autocmd()
-  else
+    if s:is_in_sidepanel()
+      execute "vertical resize " . g:sidepanel_width
+      call s:set_autocmd()
+    endif
   endif
 endfunction
 
