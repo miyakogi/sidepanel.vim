@@ -132,7 +132,9 @@ function! sidepanel#init#set_defaults()
   endif
 
   for k in keys(g:sidepanel_config)
-    let g:sidepanel_config[k] = extend(s:sidepanel_config_default[k], g:sidepanel_config[k])
+    if has_key(s:sidepanel_config_default, k)
+      let g:sidepanel_config[k] = extend(s:sidepanel_config_default[k], g:sidepanel_config[k])
+    endif
   endfor
 
 endfunction
