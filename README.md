@@ -38,6 +38,7 @@ let g:sidepanel_config['nerdtree'] = {}
 let g:sidepanel_config['tagbar'] = {}
 let g:sidepanel_config['gundo'] = {}
 let g:sidepanel_config['vimfiler'] = {}
+let g:sidepanel_config['buffergator'] = {}
 ```
 
 ## Usage

@@ -122,6 +122,22 @@ function! sidepanel#init#set_defaults()
         \    'var': 'Tlist_WinWidth',
         \  },
         \}
+  let g:sidepanel_config['buffergator'] = {
+        \  'bufname': '[[buffergator-buffers]]',
+        \  'filetype': '',
+        \  'open': ['BuffergatorOpen'],
+        \  'close': ['call buffergator#CloseBuffergator()'],
+        \  'position': {
+        \    'var': 'g:buffergator_viewport_split_policy',
+        \    'param': {
+        \      'left': 'L',
+        \      'right': 'R',
+        \    },
+        \  },
+        \  'size': {
+        \    'var': 'g:buffergator_split_size',
+        \  },
+        \}
 
   if !exists('g:sidepanel_config')
     let g:sidepanel_config = {}

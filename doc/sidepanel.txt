@@ -73,6 +73,7 @@ This option specifies activated plugins for sidepanel.
 	let g:sidepanel_config['tagbar'] = {}
 	let g:sidepanel_config['gundo'] = {}
 	let g:sidepanel_config['vimfiler'] = {}
+	let g:sidepanel_config['buffergator'] = {}
 <
 
 Default values for each plugin are listed in autoload/sidepanel/init.vim.
