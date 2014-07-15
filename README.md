@@ -5,6 +5,7 @@ This plugin currently supports
 [NERDTree](https://github.com/scrooloose/nerdtree),
 [TagBar](https://github.com/majutsushi/tagbar),
 [Gundo](https://github.com/sjl/gundo.vim),
+[Buffergator](https://github.com/jeetsukumaran/vim-buffergator),
 and [VimFiler](https://github.com/Shougo/vimfiler.vim) by default.
 
 
@@ -37,8 +38,8 @@ let g:sidepanel_config = {}
 let g:sidepanel_config['nerdtree'] = {}
 let g:sidepanel_config['tagbar'] = {}
 let g:sidepanel_config['gundo'] = {}
-let g:sidepanel_config['vimfiler'] = {}
 let g:sidepanel_config['buffergator'] = {}
+let g:sidepanel_config['vimfiler'] = {}
 ```
 
 ## Usage
