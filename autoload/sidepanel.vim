@@ -277,10 +277,14 @@ endfunction
 function! s:width_set(width)
   let g:sidepanel_width = a:width
   for l:name in keys(g:sidepanel_config)
+    if !has_key(g:sidepanel_config[l:name], "size")
+      call sidepanel#initialize()
+    endif
     let l:panel = g:sidepanel_config[l:name]
-    let l:cmd = 'let ' . l:panel.size.var . '=' . a:width
+    let l:cmd = 'let ' . l:panel["size"]["var"] . '=' . a:width
     execute l:cmd
   endfor
+  let g:sidepanel_width = a:width
 endfunction
 
 function! sidepanel#width(width)
