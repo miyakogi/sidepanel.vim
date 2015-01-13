@@ -130,8 +130,10 @@ endfunction
 
 function! s:goto_window()
   let l:winnr = s:find_window()
-  if l:winnr >= 0
+  if l:winnr > 0
     execute l:winnr . "wincmd w"
+  elseif l:winnr == 0
+    execute "wincmd w"
   endif
 endfunction
 
