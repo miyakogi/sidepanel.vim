@@ -105,13 +105,13 @@ function! s:title() abort
   endif
 endfunction
 
-function s:cr()
+function! s:cr() abort
   let l:line = getline('.')
   let l:line = substitute(l:line, '^\s\+', '', '')
   execute 'SidePanel ' . l:line
 endfunction
 
-function s:up()
+function! s:up() abort
   let l:line = line('.') - s:BaseLine +1
   let l:len = len(s:panelnames)
   if l:line <= 1
@@ -121,7 +121,7 @@ function s:up()
   endif
 endfunction
 
-function s:down()
+function! s:down() abort
   let l:line = line('.') - s:BaseLine + 1
   let l:len = len(s:panelnames)
   if l:line >= l:len
