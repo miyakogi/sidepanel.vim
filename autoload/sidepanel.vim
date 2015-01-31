@@ -55,7 +55,7 @@ function! sidepanel#open(name) abort
   endif
   call sidepanel#get_width()
 
-  if a:name == ""
+  if a:name == ''
     let l:name = 'list'
   else
     let l:name = a:name
@@ -63,7 +63,7 @@ function! sidepanel#open(name) abort
 
   if g:sidepanel_use_rabbit_ui && l:name == 'list'
     call s:open_panel(g:sidepanel_config.list)
-    return ""
+    return ''
   endif
 
   let l:eventignore = &eventignore
@@ -119,7 +119,7 @@ function! s:find_window() abort
   endif
 
   while l:num <= l:winnum
-    let l:win_cnt = getwinvar(l:num, "sidepanel_winnr", -1)
+    let l:win_cnt = getwinvar(l:num, 'sidepanel_winnr', -1)
     if l:win_cnt == l:winnr
       return l:num
     endif
@@ -131,9 +131,9 @@ endfunction
 function! s:goto_window() abort
   let l:winnr = s:find_window()
   if l:winnr > 0
-    execute l:winnr . "wincmd w"
+    execute l:winnr . 'wincmd w'
   elseif l:winnr == 0
-    execute "wincmd w"
+    execute 'wincmd w'
   endif
 endfunction
 
@@ -147,7 +147,7 @@ function! s:is_exists(...) abort
   else
     if type(a:1) == type({})
       let l:panel = a:1
-    elseif type(a:1) == type("")
+    elseif type(a:1) == type('')
       let l:panel = g:sidepanel_config[a:1]
     endif
   endif
@@ -161,7 +161,7 @@ function! s:is_exists(...) abort
     let l:sidepanel_ft = l:panel.filetype
     let l:num = 0
     while l:num <= l:winnum
-      let l:winfiletype = getwinvar(l:num, "&filetype")
+      let l:winfiletype = getwinvar(l:num, '&filetype')
       if l:winfiletype != '' && l:winfiletype == l:sidepanel_ft
         let l:res = l:num
         break
@@ -190,7 +190,7 @@ endfunction
 function! s:goto_sidepanel() abort
   let l:winnr = s:is_exists()
   if l:winnr >= 0
-    execute l:winnr . "wincmd w"
+    execute l:winnr . 'wincmd w'
   endif
 endfunction
 
@@ -269,21 +269,21 @@ function! sidepanel#pos(pos) abort
 endfunction
 
 function! sidepanel#pos_toggle() abort
-  if g:sidepanel_pos == "left"
-    call sidepanel#pos("right")
-  elseif g:sidepanel_pos == "right"
-    call sidepanel#pos("left")
+  if g:sidepanel_pos == 'left'
+    call sidepanel#pos('right')
+  elseif g:sidepanel_pos == 'right'
+    call sidepanel#pos('left')
   endif
 endfunction
 
 function! s:width_set(width) abort
   let g:sidepanel_width = a:width
   for l:name in keys(g:sidepanel_config)
-    if !has_key(g:sidepanel_config[l:name], "size")
+    if !has_key(g:sidepanel_config[l:name], 'size')
       call sidepanel#initialize()
     endif
     let l:panel = g:sidepanel_config[l:name]
-    let l:cmd = 'let ' . l:panel["size"]["var"] . '=' . a:width
+    let l:cmd = 'let ' . l:panel['size']['var'] . '=' . a:width
     execute l:cmd
   endfor
   let g:sidepanel_width = a:width
@@ -304,7 +304,7 @@ endfunction
 
 function! s:resize_panel() abort
   let l:panel = g:sidepanel_config[s:current_panelname]
-  if get(l:panel, "no_resize")
+  if get(l:panel, 'no_resize')
     return
   endif
 
@@ -316,7 +316,7 @@ function! s:resize_panel() abort
       if l:_ >= 3 | break | endif
     endwhile
     if s:is_in_sidepanel()
-      execute "vertical resize " . g:sidepanel_width
+      execute 'vertical resize ' . g:sidepanel_width
       call s:set_autocmd()
     endif
   endif

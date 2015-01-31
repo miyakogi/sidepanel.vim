@@ -8,7 +8,7 @@ function! sidepanel#test#initialize() abort
   execute 'sp ~/test/2'
   execute 'sp ~/test/3'
   execute 'wincmd k'
-  if bufname("") != 2
+  if bufname('') != 2
     echoerr 'ERROR! initialization'
   endif
 endfunction
@@ -19,14 +19,14 @@ endfunction
 
 function! sidepanel#test#postoggle() abort
   execute 'SidePanelPosToggle'
-  if bufname("") != 2
+  if bufname('') != 2
     echoerr 'ERROR! postoggle'
   endif
 endfunction
 
 function! sidepanel#test#change_width() abort
   execute 'SidePanelWidth 10'
-  if bufname("") != 2
+  if bufname('') != 2
     echoerr 'ERROR! change_width'
   endif
 endfunction
@@ -36,7 +36,7 @@ function! sidepanel#test#test(name) abort
   call sidepanel#test#open(a:name)
   execute 'wincmd l'
   execute 'wincmd j'
-  if bufname("") != 2
+  if bufname('') != 2
     echoerr 'ERROR ' . a:name
   endif
 endfunction
@@ -47,8 +47,8 @@ function! sidepanel#test#all() abort
   for name in names
     new
     only
-    echomsg ""
-    echomsg "==== Start " . name " ===="
+    echomsg ''
+    echomsg '==== Start ' . name ' ===='
     call sidepanel#test#test(name)
   endfor
 endfunction

@@ -5,7 +5,7 @@ set cpo&vim
 
 function! sidepanel#init#set_defaults() abort
   if !exists('g:sidepanel_pos')
-    let g:sidepanel_pos = "left"
+    let g:sidepanel_pos = 'left'
   endif
   if !exists('g:sidepanel_width')
     let g:sidepanel_width = 32
@@ -157,21 +157,21 @@ endfunction
 
 function! sidepanel#init#nerdtree() abort
   if filereadable(expand('%'))
-    execute "NERDTreeFind"
+    execute 'NERDTreeFind'
   else
-    execute "NERDTreeCWD"
+    execute 'NERDTreeCWD'
   endif
 endfunction
 
 function! sidepanel#init#gundo() abort
   if !sidepanel#util#gotowin('__Gundo__')
-    execute "GundoShow"
+    execute 'GundoShow'
   endif
 endfunction
 
 function! sidepanel#init#vimfiler() abort
   if exists(':VimFilerExplorer')
-    execute "VimFilerExplorer -winwidth=" . g:sidepanel_width
+    execute 'VimFilerExplorer -winwidth=' . g:sidepanel_width
   endif
 endfunction
 

@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-if exists("g:loaded_sidepanel")
+if exists('g:loaded_sidepanel')
   finish
 endif
 let g:loaded_sidepanel = 1

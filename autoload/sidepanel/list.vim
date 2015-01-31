@@ -13,7 +13,7 @@ function! sidepanel#list#open() abort
       let panels = copy(panelnames)
       let choices = rabbit_ui#choices(title, panels)
     catch
-      echoerr "Failed to open rabbit-ui. Use default list."
+      echoerr 'Failed to open rabbit-ui. Use default list.'
       let g:sidepanel_use_rabbit_ui = 0
       call s:list_open()
     endtry
@@ -24,7 +24,7 @@ function! sidepanel#list#open() abort
     elseif type(choices) == 4 && choices == {}
       return 0
     else
-      echoerr "Unexpected value from rabbit-ui. Use default list."
+      echoerr 'Unexpected value from rabbit-ui. Use default list.'
       let g:sidepanel_use_rabbit_ui = 0
       call s:list_open()
     endif
@@ -34,11 +34,11 @@ function! sidepanel#list#open() abort
 endfunction
 
 function! s:list_open() abort
-  let list_bufname = "__SidePanel_List__"
-  let msg_failed = "Failed to make List"
+  let list_bufname = '__SidePanel_List__'
+  let msg_failed = 'Failed to make List'
   if sidepanel#util#gotowin(list_bufname) == 0
     call sidepanel#util#open(list_bufname)
-    if expand('%:t') == "__SidePanel_List__"
+    if expand('%:t') == '__SidePanel_List__'
       try
         setlocal noswapfile
         setlocal buftype=nofile
@@ -65,11 +65,11 @@ function! s:list_open() abort
 endfunction
 
 function! sidepanel#list#close() abort
-  call sidepanel#util#close("__SidePanel_List__")
+  call sidepanel#util#close('__SidePanel_List__')
 endfunction
 
 function! s:clear() abort
-  execute "%delete"
+  execute '%delete'
 endfunction
 
 function! s:create() abort
@@ -78,7 +78,7 @@ function! s:create() abort
   call append(0, s:title())
   call append(0, '')
   for l:name in l:panelnames
-    call append(line("$"), "   " . l:name)
+    call append(line('$'), '   ' . l:name)
     call cursor(s:BaseLine, 4)
   endfor
 endfunction
@@ -107,8 +107,8 @@ endfunction
 
 function s:cr()
   let l:line = getline('.')
-  let l:line = substitute(l:line, '^\s\+', '', "")
-  execute "SidePanel " . l:line
+  let l:line = substitute(l:line, '^\s\+', '', '')
+  execute 'SidePanel ' . l:line
 endfunction
 
 function s:up()
