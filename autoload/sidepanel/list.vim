@@ -102,6 +102,7 @@ function! s:title() abort
     let s:title = s:space . ' SidePanel ' . s:space
     let s:margin = ''
     return s:title
+  endif
 endfunction
 
 function s:cr()
