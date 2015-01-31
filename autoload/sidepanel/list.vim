@@ -5,7 +5,7 @@ set cpo&vim
 
 let s:BaseLine = 4
 
-function! sidepanel#list#open()
+function! sidepanel#list#open() abort
   if g:sidepanel_use_rabbit_ui == 1
     try
       let title = 'SidePanel List'
@@ -33,7 +33,7 @@ function! sidepanel#list#open()
   endif
 endfunction
 
-function! s:list_open()
+function! s:list_open() abort
   let list_bufname = "__SidePanel_List__"
   let msg_failed = "Failed to make List"
   if sidepanel#util#gotowin(list_bufname) == 0
@@ -64,15 +64,15 @@ function! s:list_open()
   endif
 endfunction
 
-function! sidepanel#list#close()
+function! sidepanel#list#close() abort
   call sidepanel#util#close("__SidePanel_List__")
 endfunction
 
-function! s:clear()
+function! s:clear() abort
   execute "%delete"
 endfunction
 
-function! s:create()
+function! s:create() abort
   let l:panelnames = s:get_panelnames()
 
   call append(0, s:title())
@@ -83,7 +83,7 @@ function! s:create()
   endfor
 endfunction
 
-function! s:get_panelnames()
+function! s:get_panelnames() abort
   let s:panelnames = []
   for l:name in keys(g:sidepanel_config)
     call add(s:panelnames, l:name)
@@ -91,7 +91,7 @@ function! s:get_panelnames()
   return sort(s:panelnames)
 endfunction
 
-function! s:title()
+function! s:title() abort
   if exists('g:sidepanel_width')
     let s:title_width = g:sidepanel_width  / 2
     let s:title_space = s:title_width - 7

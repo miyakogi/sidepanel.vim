@@ -3,13 +3,13 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! sidepanel#initialize()
+function! sidepanel#initialize() abort
   call sidepanel#init#set_defaults()
   call s:pos_set(g:sidepanel_pos)
   call s:width_set(g:sidepanel_width)
 endfunction
 
-function! s:exec_cmd(cmd)
+function! s:exec_cmd(cmd) abort
   let l:type = type(a:cmd)
   if l:type == 1
     execute a:cmd
@@ -23,7 +23,7 @@ function! s:exec_cmd(cmd)
   return ''
 endfunction
 
-function! s:open_panel(panel)
+function! s:open_panel(panel) abort
   let l:res = s:exec_cmd(a:panel.open)
   if l:res == 'error'
     let l:msg = 'Type of g:sidepanel_config["panelname"].open must be "string" or '
@@ -32,7 +32,7 @@ function! s:open_panel(panel)
   endif
 endfunction
 
-function! s:close_panel(panel)
+function! s:close_panel(panel) abort
   let l:res = s:exec_cmd(a:panel.close)
   if l:res == 'error'
     let l:msg = 'Type of g:sidepanel_config["panelname"].close must be "string" or '
@@ -42,13 +42,13 @@ function! s:close_panel(panel)
   return
 endfunction
 
-function! s:error_msg(msg)
+function! s:error_msg(msg) abort
   let g:sidepanel_errmsg = a:msg
   echoerr 'Error: vim-panelname'
   echoerr a:msg
 endfunction
 
-function! sidepanel#open(name)
+function! sidepanel#open(name) abort
   if !exists('sidepanel#initialized')
     call sidepanel#initialize()
     let sidepanel#initialized = 1
@@ -103,14 +103,14 @@ function! sidepanel#open(name)
   endtry
 endfunction
 
-function! sidepanel#close()
+function! sidepanel#close() abort
   call sidepanel#get_width()
   if s:is_exists() >= 0
     call s:close_panel(g:sidepanel_config[s:current_panelname])
   endif
 endfunction
 
-function! s:find_window()
+function! s:find_window() abort
   let l:winnum = winnr('$')
   let l:winnr = s:temp_winnr
   let l:num = 0
@@ -128,7 +128,7 @@ function! s:find_window()
   return ''
 endfunction
 
-function! s:goto_window()
+function! s:goto_window() abort
   let l:winnr = s:find_window()
   if l:winnr > 0
     execute l:winnr . "wincmd w"
@@ -137,7 +137,7 @@ function! s:goto_window()
   endif
 endfunction
 
-function! s:is_exists(...)
+function! s:is_exists(...) abort
   let l:res = -1
   if a:0 == 0
     if !exists('s:current_panelname')
@@ -173,7 +173,7 @@ function! s:is_exists(...)
   return -1
 endfunction
 
-function! s:is_in_sidepanel()
+function! s:is_in_sidepanel() abort
   if !exists('s:current_panelname')
     return 0
   endif
@@ -187,14 +187,14 @@ function! s:is_in_sidepanel()
   return 0
 endfunction
 
-function! s:goto_sidepanel()
+function! s:goto_sidepanel() abort
   let l:winnr = s:is_exists()
   if l:winnr >= 0
     execute l:winnr . "wincmd w"
   endif
 endfunction
 
-function! s:cursor_save()
+function! s:cursor_save() abort
   let s:winview = winsaveview()
   if !exists('s:winnr_count')
     let s:winnr_count = 0
@@ -208,12 +208,12 @@ function! s:cursor_save()
   endif
 endfunction
 
-function! s:cursor_load()
+function! s:cursor_load() abort
   call s:goto_window()
   call winrestview(s:winview)
 endfunction
 
-function! s:refresh()
+function! s:refresh() abort
   if s:is_exists() == -1
     return ''
   endif
@@ -232,7 +232,7 @@ function! s:refresh()
   call s:cursor_load()
 endfunction
 
-function! s:pos_set(pos)
+function! s:pos_set(pos) abort
   let g:sidepanel_pos = a:pos
   for l:panelname in keys(g:sidepanel_config)
     let l:panel = g:sidepanel_config[l:panelname]
@@ -250,11 +250,11 @@ function! s:pos_set(pos)
   endfor
 endfunction
 
-function! sidepanel#focus()
+function! sidepanel#focus() abort
   call s:goto_sidepanel()
 endfunction
 
-function! sidepanel#pos(pos)
+function! sidepanel#pos(pos) abort
   call sidepanel#get_width()
   if g:sidepanel_pos == a:pos
     return
@@ -268,7 +268,7 @@ function! sidepanel#pos(pos)
   call s:cursor_load()
 endfunction
 
-function! sidepanel#pos_toggle()
+function! sidepanel#pos_toggle() abort
   if g:sidepanel_pos == "left"
     call sidepanel#pos("right")
   elseif g:sidepanel_pos == "right"
@@ -276,7 +276,7 @@ function! sidepanel#pos_toggle()
   endif
 endfunction
 
-function! s:width_set(width)
+function! s:width_set(width) abort
   let g:sidepanel_width = a:width
   for l:name in keys(g:sidepanel_config)
     if !has_key(g:sidepanel_config[l:name], "size")
@@ -289,7 +289,7 @@ function! s:width_set(width)
   let g:sidepanel_width = a:width
 endfunction
 
-function! sidepanel#width(width)
+function! sidepanel#width(width) abort
   augroup sidepanel_getwidth
     autocmd!
   augroup END
@@ -302,7 +302,7 @@ function! sidepanel#width(width)
   call s:cursor_load()
 endfunction
 
-function! s:resize_panel()
+function! s:resize_panel() abort
   let l:panel = g:sidepanel_config[s:current_panelname]
   if get(l:panel, "no_resize")
     return
@@ -322,14 +322,14 @@ function! s:resize_panel()
   endif
 endfunction
 
-function! s:set_autocmd()
+function! s:set_autocmd() abort
   augroup sidepanel_getwidth
     autocmd!
     autocmd BufUnload,BufWinLeave <buffer> call sidepanel#get_width()
   augroup END
 endfunction
 
-function! sidepanel#get_width()
+function! sidepanel#get_width() abort
   call s:cursor_save()
   if s:is_exists() != -1
     let l:_ = 0
@@ -344,7 +344,7 @@ function! sidepanel#get_width()
   " return exists('g:sidepanel_width') ? g:sidepanel_width : 0
 endfunction
 
-function! sidepanel#complete(pre)
+function! sidepanel#complete(pre) abort
   if !exists('sidepanel#initialized')
     call sidepanel#initialize()
     let sidepanel#initialized = 1

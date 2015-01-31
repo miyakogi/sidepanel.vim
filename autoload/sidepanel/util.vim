@@ -3,7 +3,7 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! sidepanel#util#open(bufname)
+function! sidepanel#util#open(bufname) abort
   let l:temp_equalalways = &equalalways
   let &equalalways = 0
   if g:sidepanel_pos == "right"
@@ -19,13 +19,13 @@ function! sidepanel#util#open(bufname)
   let &equalalways = l:temp_equalalways
 endfunction
 
-function! sidepanel#util#close(bufname)
+function! sidepanel#util#close(bufname) abort
   if sidepanel#util#gotowin(a:bufname)
     execute 'bdel ' . bufnr("")
   endif
 endfunction
 
-function! sidepanel#util#delete(bufname)
+function! sidepanel#util#delete(bufname) abort
   let l:nr = bufnr(a:bufname)
   if l:nr != -1
     execute 'bdel ' . l:nr
@@ -34,7 +34,7 @@ function! sidepanel#util#delete(bufname)
   endif
 endfunction
 
-function sidepanel#util#gotowin(bufname)
+function! sidepanel#util#gotowin(bufname) abort
   if a:bufname == expand('%:t')
     return 1
   endif

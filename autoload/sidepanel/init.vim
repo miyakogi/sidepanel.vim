@@ -3,7 +3,7 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! sidepanel#init#set_defaults()
+function! sidepanel#init#set_defaults() abort
   if !exists('g:sidepanel_pos')
     let g:sidepanel_pos = "left"
   endif
@@ -155,7 +155,7 @@ function! sidepanel#init#set_defaults()
 
 endfunction
 
-function! sidepanel#init#nerdtree()
+function! sidepanel#init#nerdtree() abort
   if filereadable(expand('%'))
     execute "NERDTreeFind"
   else
@@ -163,13 +163,13 @@ function! sidepanel#init#nerdtree()
   endif
 endfunction
 
-function! sidepanel#init#gundo()
+function! sidepanel#init#gundo() abort
   if !sidepanel#util#gotowin('__Gundo__')
     execute "GundoShow"
   endif
 endfunction
 
-function! sidepanel#init#vimfiler()
+function! sidepanel#init#vimfiler() abort
   if exists(':VimFilerExplorer')
     execute "VimFilerExplorer -winwidth=" . g:sidepanel_width
   endif
