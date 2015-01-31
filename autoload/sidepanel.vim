@@ -25,7 +25,7 @@ endfunction
 
 function! s:open_panel(panel) abort
   let l:res = s:exec_cmd(a:panel.open)
-  if l:res == 'error'
+  if l:res ==# 'error'
     let l:msg = 'Type of g:sidepanel_config["panelname"].open must be "string" or '
           \ . '"list" of command(s).'
     call s:error_msg(l:msg)
@@ -34,7 +34,7 @@ endfunction
 
 function! s:close_panel(panel) abort
   let l:res = s:exec_cmd(a:panel.close)
-  if l:res == 'error'
+  if l:res ==# 'error'
     let l:msg = 'Type of g:sidepanel_config["panelname"].close must be "string" or '
           \ . '"list" of command(s).'
     call s:error_msg(l:msg)
@@ -55,13 +55,13 @@ function! sidepanel#open(name) abort
   endif
   call sidepanel#get_width()
 
-  if a:name == ''
+  if a:name ==# ''
     let l:name = 'list'
   else
     let l:name = a:name
   endif
 
-  if g:sidepanel_use_rabbit_ui && l:name == 'list'
+  if g:sidepanel_use_rabbit_ui && l:name ==# 'list'
     call s:open_panel(g:sidepanel_config.list)
     return ''
   endif
@@ -70,7 +70,7 @@ function! sidepanel#open(name) abort
   set eventignore=BufUnload,BufWinLeave
 
   try
-    if !exists('s:current_panelname') || l:name == s:current_panelname
+    if !exists('s:current_panelname') || l:name ==# s:current_panelname
       let l:panel = g:sidepanel_config[l:name]
       let s:current_panelname = l:name
       let g:sidepanel_current_panel = l:name
@@ -162,7 +162,7 @@ function! s:is_exists(...) abort
     let l:num = 0
     while l:num <= l:winnum
       let l:winfiletype = getwinvar(l:num, '&filetype')
-      if l:winfiletype != '' && l:winfiletype == l:sidepanel_ft
+      if l:winfiletype !=# '' && l:winfiletype ==# l:sidepanel_ft
         let l:res = l:num
         break
       endif
@@ -180,9 +180,9 @@ function! s:is_in_sidepanel() abort
 
   let l:panel = g:sidepanel_config[s:current_panelname]
   if has_key(l:panel, 'bufname')
-    return expand('%:t') == l:panel.bufname
+    return expand('%:t') ==# l:panel.bufname
   elseif has_key(l:panel, 'filetype')
-    return &filetype == l:panel.filetype
+    return &filetype ==# l:panel.filetype
   endif
   return 0
 endfunction
@@ -269,9 +269,9 @@ function! sidepanel#pos(pos) abort
 endfunction
 
 function! sidepanel#pos_toggle() abort
-  if g:sidepanel_pos == 'left'
+  if g:sidepanel_pos ==# 'left'
     call sidepanel#pos('right')
-  elseif g:sidepanel_pos == 'right'
+  elseif g:sidepanel_pos ==# 'right'
     call sidepanel#pos('left')
   endif
 endfunction

@@ -6,7 +6,7 @@ set cpo&vim
 function! sidepanel#util#open(bufname) abort
   let l:temp_equalalways = &equalalways
   let &equalalways = 0
-  if g:sidepanel_pos == 'right'
+  if g:sidepanel_pos ==# 'right'
     botright vs
   else
     topleft vs
@@ -35,7 +35,7 @@ function! sidepanel#util#delete(bufname) abort
 endfunction
 
 function! sidepanel#util#gotowin(bufname) abort
-  if a:bufname == expand('%:t')
+  if a:bufname ==# expand('%:t')
     return 1
   endif
   if bufwinnr(bufnr(a:bufname)) != -1

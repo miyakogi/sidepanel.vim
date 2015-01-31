@@ -38,7 +38,7 @@ function! s:list_open() abort
   let msg_failed = 'Failed to make List'
   if sidepanel#util#gotowin(list_bufname) == 0
     call sidepanel#util#open(list_bufname)
-    if expand('%:t') == '__SidePanel_List__'
+    if expand('%:t') ==# '__SidePanel_List__'
       try
         setlocal noswapfile
         setlocal buftype=nofile
