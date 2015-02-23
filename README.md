@@ -44,7 +44,7 @@ let g:sidepanel_config['vimfiler'] = {}
 
 ## Usage
 
-`:SidePanel` shows a list of available plugins. When you select a plugin and press enter, the plugin will replace the plugin list. If you have installed [rabbit-ui.vim](https://github.com/rbtnn/rabbit-ui.vim) plugin and `g:sidepanel_use_rabbit_ui=1`, this plugin uses rabbit-ui to show the list.
+`:SidePanel` shows a list of available plugins. When you select a plugin and press enter, the plugin will replace the plugin list. If you have installed [rabbit-ui.vim](https://github.com/rbtnn/rabbit-ui.vim) plugin and add `let g:sidepanel_use_rabbit_ui = 1` in your vimrc, this plugin uses rabbit-ui to show the list.
 
 `:SidePanel nerdtree` opens NERDTree. If another sidebar is exists, it will be replaced.
 
