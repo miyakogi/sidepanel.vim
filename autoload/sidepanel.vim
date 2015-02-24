@@ -5,8 +5,8 @@ set cpo&vim
 
 function! sidepanel#initialize() abort
   call sidepanel#init#set_defaults()
-  call s:pos_set(g:sidepanel_pos)
-  call s:width_set(g:sidepanel_width)
+  call s:set_pos(g:sidepanel_pos)
+  call s:set_width(g:sidepanel_width)
   let sidepanel#initialized = 1
 endfunction
 
@@ -232,7 +232,7 @@ function! s:refresh() abort
   call s:cursor_load()
 endfunction
 
-function! s:pos_set(pos) abort
+function! s:set_pos(pos) abort
   let g:sidepanel_pos = a:pos
   for l:panelname in keys(g:sidepanel_config)
     if !has_key(g:sidepanel_config[l:panelname], 'position')
@@ -262,7 +262,7 @@ function! sidepanel#pos(pos) abort
   if g:sidepanel_pos == a:pos
     return
   endif
-  call s:pos_set(a:pos)
+  call s:set_pos(a:pos)
   if s:is_exists() == -1
     return
   endif
@@ -279,7 +279,7 @@ function! sidepanel#pos_toggle() abort
   endif
 endfunction
 
-function! s:width_set(width) abort
+function! s:set_width(width) abort
   let g:sidepanel_width = a:width
   for l:name in keys(g:sidepanel_config)
     if !has_key(g:sidepanel_config[l:name], 'size')
@@ -296,7 +296,7 @@ function! sidepanel#width(width) abort
   augroup sidepanel_getwidth
     autocmd!
   augroup END
-  call s:width_set(a:width)
+  call s:set_width(a:width)
   if s:is_exists() == -1
     return
   endif
