@@ -7,6 +7,7 @@ function! sidepanel#initialize() abort
   call sidepanel#init#set_defaults()
   call s:pos_set(g:sidepanel_pos)
   call s:width_set(g:sidepanel_width)
+  let sidepanel#initialized = 1
 endfunction
 
 function! s:exec_cmd(cmd) abort
@@ -51,7 +52,6 @@ endfunction
 function! sidepanel#open(name) abort
   if !exists('sidepanel#initialized')
     call sidepanel#initialize()
-    let sidepanel#initialized = 1
   endif
   call sidepanel#get_width()
 
@@ -235,6 +235,9 @@ endfunction
 function! s:pos_set(pos) abort
   let g:sidepanel_pos = a:pos
   for l:panelname in keys(g:sidepanel_config)
+    if !has_key(g:sidepanel_config[l:panelname], 'position')
+      call sidepanel#initialize()
+    endif
     let l:panel = g:sidepanel_config[l:panelname]
     let l:cmd = ''
     if has_key(l:panel.position, 'var')
