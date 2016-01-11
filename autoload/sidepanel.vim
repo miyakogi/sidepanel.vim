@@ -25,12 +25,23 @@ function! s:exec_cmd(cmd) abort
 endfunction
 
 function! s:open_panel(panel) abort
-  let l:res = s:exec_cmd(a:panel.open)
-  if l:res ==# 'error'
-    let l:msg = 'Type of g:sidepanel_config["panelname"].open must be "string" or '
-          \ . '"list" of command(s).'
-    call s:error_msg(l:msg)
-  endif
+  let l:cur_file = expand('%:p')
+  try
+    let l:res = s:exec_cmd(a:panel.open)
+    if l:res ==# 'error'
+      let l:msg = 'Type of g:sidepanel_config["panelname"].open must be "string" or '
+            \ . '"list" of command(s).'
+      call s:error_msg(l:msg)
+    endif
+  catch /E716/
+    " Workaroud for NERDTreeFind...
+    if a:panel.filetype ==# 'nerdtree'
+      echomsg 'Error detected while opening NERDTree, maybe by :NERDTreeFind'
+      execute 'NERDTree ' . l:cur_file
+    else
+      throw 'E716'
+    endif
+  endtry
 endfunction
 
 function! s:close_panel(panel) abort
