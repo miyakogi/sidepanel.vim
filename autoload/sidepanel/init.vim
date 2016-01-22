@@ -170,8 +170,11 @@ function! sidepanel#init#gundo() abort
 endfunction
 
 function! sidepanel#init#vimfiler() abort
+  let direction = g:sidepanel_config.vimfiler.position.param[g:sidepanel_pos]
   if exists(':VimFilerExplorer')
     execute 'VimFilerExplorer -winwidth=' . g:sidepanel_width
+          \ . ' -direction=' . direction
+          \ . ' -find'
   endif
 endfunction
 
