@@ -6,7 +6,8 @@ This plugin currently supports
 [TagBar](https://github.com/majutsushi/tagbar),
 [Gundo](https://github.com/sjl/gundo.vim),
 [Buffergator](https://github.com/jeetsukumaran/vim-buffergator),
-and [VimFiler](https://github.com/Shougo/vimfiler.vim) by default.
+[VimFiler](https://github.com/Shougo/vimfiler.vim),
+and [Defx](https://github.com/Shougo/defx.nvim) by default.
 
 
 ## Installation
@@ -40,6 +41,7 @@ let g:sidepanel_config['tagbar'] = {}
 let g:sidepanel_config['gundo'] = {}
 let g:sidepanel_config['buffergator'] = {}
 let g:sidepanel_config['vimfiler'] = {}
+let g:sidepanel_config['defx'] = {}
 ```
 
 ## Usage

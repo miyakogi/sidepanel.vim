@@ -106,6 +106,21 @@ function! sidepanel#init#set_defaults() abort
         \    'var': 'g:sidepanel_width',
         \  },
         \}
+  let s:sidepanel_config_default['defx'] = {
+        \  'filetype': 'defx',
+        \  'open': ['call sidepanel#init#defx()'],
+        \  'close': ['call sidepanel#util#close("[defx] default-0")'],
+        \  'position': {
+        \    'var': 'g:sidepanel#init#defx_split_rule',
+        \    'param': {
+        \      'left': 'topleft',
+        \      'right': 'botright',
+        \    },
+        \  },
+        \  'size': {
+        \    'var': 'g:sidepanel_width',
+        \  },
+        \}
   let s:sidepanel_config_default['taglist'] = {
         \  'bufname': '__Tag_List__',
         \  'filetype': 'taglist',
@@ -175,6 +190,14 @@ function! sidepanel#init#vimfiler() abort
     execute 'VimFilerExplorer -winwidth=' . g:sidepanel_width
           \ . ' -direction=' . direction
           \ . ' -find'
+  endif
+endfunction
+
+function! sidepanel#init#defx() abort
+  let direction = g:sidepanel_config.defx.position.param[g:sidepanel_pos]
+  if !sidepanel#util#gotowin('[defx] default-0')
+    execute 'Defx -split=vertical -winwidth=' . g:sidepanel_width
+          \ . ' -direction=' . direction
   endif
 endfunction
 
